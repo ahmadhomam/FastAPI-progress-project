@@ -11,13 +11,18 @@ books = [
     {"title": "Half Girlfriend","Author": "Chetan Bagat", "category": "Romantic"},
 ]
 
+#path paramter
+@app.get("/books/")
+async def read_books() :         # python function 
+    return books
 
-# @app.get("/books/{title_name}")
-# async def read_books(title_name:str) :         # python function 
-#     for book in books:
-#         if book.get("title").casefold() == title_name.casefold() :
-#             return book
 
+#dyamic parameter
+@app.get("/books/{title_name}")
+async def read_books(title_name:str) :         # python function 
+    for book in books:
+        if book.get("title").casefold() == title_name.casefold() :
+            return book
 
 #query parameter
 
