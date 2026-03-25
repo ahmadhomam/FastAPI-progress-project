@@ -1,4 +1,4 @@
-from fastapi import FastAPI     # importing the dependencies FastAPI from fastapi directory
+from fastapi import Body,FastAPI     # importing the dependencies FastAPI from fastapi directory
 
 app = FastAPI()                 # help the uvicorn(surver) to identify this application is FastAPI
 
@@ -35,3 +35,9 @@ async def book_for_query(book_title:str,category:str) :
             book_to_show.append(book)
     
     return book_to_show
+
+#Post request method:
+
+@app.post("/books/create_data")
+async def create_new_book(new_book= Body()) :
+    books.append(new_book)
