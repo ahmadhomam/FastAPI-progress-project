@@ -41,3 +41,10 @@ async def book_for_query(book_title:str,category:str) :
 @app.post("/books/create_data")
 async def create_new_book(new_book= Body()) :
     books.append(new_book)
+
+
+@app.put("/books/updated_one")
+async def updating_books(updated_one= Body()):
+    for i in range(len(books)):
+        if books[i].get("title").casefold() == updated_one.get("title").casefold():
+            books[i] = updated_one
