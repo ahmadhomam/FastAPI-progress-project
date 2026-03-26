@@ -44,4 +44,6 @@ async def read_list():
 
 @app.post("/books/")
 async def create_valid(valid_var:valid_book):
-    BOOK.append(valid_var)
+    new_book = Book(**valid_var.model_dump())
+    print(type(new_book))
+    BOOK.append(new_book)
