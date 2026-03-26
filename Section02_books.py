@@ -1,5 +1,7 @@
-from fastapi import FastAPI,Body
-from pydantic import BaseModel
+from typing import Optional
+
+from fastapi import FastAPI
+from pydantic import BaseModel, Field
 
 app = FastAPI()
 
@@ -29,11 +31,11 @@ BOOK = [
 
 #validation using pydantic
 class valid_book(BaseModel) :
-    id: int
-    title: str
-    author: str
-    description: str
-    rating: int
+    id: Optional[int]= None
+    title: str = Field(min_length=3)
+    author: str= Field(min_length=3, max_length=10)
+    description: str= Field(max_length= 20)
+    rating: int=  Field(gt=-1,lt=6)
 
 
 
@@ -46,4 +48,9 @@ async def read_list():
 async def create_valid(valid_var:valid_book):
     new_book = Book(**valid_var.model_dump())
     print(type(new_book))
-    BOOK.append(new_book)
+    BOOK.append(assign_id(new_book))
+
+#function to add id in cronologival order .
+def assign_id(book:Book):
+    book.id = 1 if len(BOOK) == 0 else BOOK[-1].id + 1
+    return book
